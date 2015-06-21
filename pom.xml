@@ -4,6 +4,31 @@
 	<groupId>de.zebrajaeger</groupId>
 	<artifactId>panowrapper</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>${project.groupId}:${project.artifactId}</name>
+
+	<description>A wrapper for pano-generator krPano to render a bunch of panos automatically</description>
+	<url>https://github.com/zebrajaeger/krpanowrapper</url>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Lars Brandt</name>
+			<email>zebrajager@github.com</email>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/zebrajaeger/krpanowrapper.git</url>
+	</scm>
 
 	<properties>
 		<mainClass>de.zebrajaeger.panowrapper.App</mainClass>
@@ -69,7 +94,7 @@
 					</filesets>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -132,7 +157,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
@@ -149,7 +174,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 </project>
