@@ -13,6 +13,7 @@
 		<targetDir>${project.basedir}/target</targetDir>
 		<targetJar>${targetDir}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</targetJar>
 		<testJar>${project.basedir}/test.jar</testJar>
+		<exe>${project.basedir}/target/test.exe</exe>
 	</properties>
 
 	<dependencies>
@@ -55,6 +56,21 @@
 			</plugin>
 
 			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${project.basedir}</directory>
+							<includes>
+								<include>test.jar</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
@@ -78,13 +94,53 @@
 			</plugin>
 
 			<plugin>
+				<groupId>com.akathist.maven.plugins.launch4j</groupId>
+				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.7.7</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>launch4j</goal>
+						</goals>
+						<configuration>
+							<headerType>console</headerType>
+							<jar>${project.build.directory}/${artifactId}-${version}-jar-with-dependencies.jar</jar>
+							<outfile>${exe}</outfile>
+							<downloadUrl>http://java.com/download</downloadUrl>
+							<classPath>
+								<mainClass>${mainClass}</mainClass>
+								<preCp>anything</preCp>
+							</classPath>
+							<jre>
+								<minVersion>1.7.0</minVersion>
+								<jdkPreference>preferJre</jdkPreference>
+							</jre>
+							<versionInfo>
+								<fileVersion>1.0.0.0</fileVersion>
+								<txtFileVersion>${project.version}</txtFileVersion>
+								<fileDescription>${project.name}</fileDescription>
+								<copyright>2012 hasCode.com</copyright>
+								<productVersion>1.0.0.0</productVersion>
+								<txtProductVersion>1.0.0.0</txtProductVersion>
+								<productName>${project.name}</productName>
+								<companyName>hasCode.com</companyName>
+								<internalName>hasCode</internalName>
+								<originalFilename>hasCode.exe</originalFilename>
+							</versionInfo>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
 						<phase>package</phase>
 						<configuration>
 							<tasks>
-								<copy file="${targetJar}" tofile="${testJar}" />
+								<copy file="${exe}" toDir="${project.basedir}" />
 							</tasks>
 						</configuration>
 						<goals>
@@ -93,22 +149,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${project.basedir}</directory>
-							<includes>
-								<include>test.jar</include>
-							</includes>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-
+			
 		</plugins>
 	</build>
 </project>

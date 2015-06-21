@@ -52,10 +52,16 @@ public class Watchdog extends Thread {
         check();
       }
     } catch (final InterruptedException e) {
-      System.out.println("WATCHDOG is dead now");
+      LOG.info("Watchdog has been interrupted");
     }
   }
 
+  /**
+   * just for testing
+   * 
+   * @param args
+   * @throws InterruptedException
+   */
   public static void main(String[] args) throws InterruptedException {
     final Watchdog wd = new Watchdog(1000);
     wd.addListener(new WatchdogListener() {
